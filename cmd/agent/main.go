@@ -2,7 +2,7 @@ package main
 
 import (
 	"log"
-	"github.com/zakharkaverin1/final_calculator/internal/application"
+	"github.com/zakharkaverin1/final_calca/internal/application"
 )
 
 func main() {
