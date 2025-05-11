@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/zakharkaverin1/calculator/pkg/calculation"
+	"github.com/zakharkaverin1/final_calca/pkg/calculation"
 )
 
 type Response struct {
