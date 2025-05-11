@@ -15,7 +15,7 @@ git clone https://github.com/zakharkaverin1/final_calca
 
 ### Шаг 2
 ```bash
-cd calculator
+cd final_calca
 ```
 
 ### Шаг 3: Установка зависимостей 
@@ -33,7 +33,7 @@ go run .\cmd\orchestrator\main.go
 
 ### Шаг 6: 
 ```bash
-cd calculator
+cd final_calca
 ```
 
 ### Шаг 7: Запускаем агента
