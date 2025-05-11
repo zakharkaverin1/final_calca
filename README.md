@@ -10,7 +10,7 @@
 ### Шаг 1: Клонировать репозиторий
 Вводим в консоль данную команду
 ```bash
-git clone https://github.com/zakharkaverin1/calculator
+git clone https://github.com/zakharkaverin1/final_calca
 ```
 
 ### Шаг 2
