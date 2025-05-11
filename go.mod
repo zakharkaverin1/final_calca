@@ -7,7 +7,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/mattn/go-sqlite3 v1.14.28
 	github.com/stretchr/testify v1.10.0
-	github.com/zakharkaverin1/calculator v0.0.0-20250501181608-4413783456ef
+	github.com/zakharkaverin1/final_calca v0.0.0-20250501181608-4413783456ef
 )
 
 require (
