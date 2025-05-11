@@ -67,147 +67,104 @@ go run .\cmd\agent\main.go
 
 # API Эндпоинты
 
-### 1. Регистрация пользователя
+## Аутентификация
 
-**Запрос:**
-- **Метод:** `POST`
-- **URL:** `/api/v1/register`
-- **Тело запроса:** JSON с полями `username` и `password`.
-
-**Пример запроса с `curl`:**
-```bash
-curl -X POST http://localhost:8080/api/v1/register \
--H "Content-Type: application/json" \
--d '{"username": "user1", "password": "pass123"}'
-```
-
-**Ответ:**
-- **Статус:** `201 Created`
-- **Тело ответа:** JSON с полем `id`, содержащим идентификатор созданного выражения.
+###  Регистрация
+**POST** `/register`
 
 ```json
 {
-  "id": 1
+  "username": "testuser",
+  "password": "testpass"
+}
+```
+
+**curl:**
+```bash
+curl -X POST http://localhost:8080/register \
+  -H "Content-Type: application/json" \
+  -d '{"username":"testuser","password":"testpass"}'
+```
+
+---
+
+### Логин
+**POST** `/login`
+
+**curl:**
+```bash
+curl -X POST http://localhost:8080/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"testuser","password":"testpass"}'
+```
+
+**Ответ:**
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsIn..."
 }
 ```
 
 ---
 
-### 2. Получение списка всех выражений
+## Работа с выражениями
 
-**Запрос:**
-- **Метод:** `GET`
-- **URL:** `/api/v1/expressions`
+> ❗ Все ниже указанные запросы требуют заголовок `Authorization: Bearer <JWT_TOKEN>`
 
-**Пример запроса с `curl`:**
-```bash
-curl -X GET http://localhost:8080/api/v1/expressions
-```
+---
 
-**Ответ:**
-- **Статус:** `200 OK`
-- **Тело ответа:** JSON с массивом выражений, каждое из которых содержит `id`, `expression`, `status`, и `result`.
+### Отправить выражение
+**POST** `/expressions`
 
 ```json
 {
-  "expressions": [
-    {
-      "id": 1,
-      "expression": "2 + 2 * 2",
-      "status": "completed",
-      "result": 6
-    },
-    {
-      "id": 2,
-      "expression": "3 * (4 - 2)",
-      "status": "cooking",
-      "result": 0
-    }
-  ]
+  "expression": "2 + 3 * 4"
+}
+```
+
+**curl:**
+```bash
+curl -X POST http://localhost:8080/expressions \
+  -H "Authorization: Bearer <JWT_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{"expression": "2 + 3 * 4"}'
+```
+
+**Ответ:**
+```json
+{
+  "id": 1,
+  "expression": "2 + 3 * 4",
+  "result": 14
 }
 ```
 
 ---
 
-### 3. Получение выражения по ID
+### 📋 Получить все выражения
+**GET** `/expressions`
 
-**Запрос:**
-- **Метод:** `GET`
-- **URL:** `/api/v1/expressions/{id}`
-
-**Пример запроса с `curl`:**
+**curl:**
 ```bash
-curl -X GET http://localhost:8080/api/v1/expressions/1
-```
-
-**Ответ:**
-- **Статус:** `200 OK`
-- **Тело ответа:** JSON с информацией о выражении.
-
-```json
-{
-  "expression": {
-    "id": 1,
-    "expression": "2 + 2 * 2",
-    "status": "completed",
-    "result": 6
-  }
-}
+curl -X GET http://localhost:8080/expressions \
+  -H "Authorization: Bearer <JWT_TOKEN>"
 ```
 
 ---
 
-### 4. Получение задачи для вычисления (внутренний эндпоинт)
+### Получить выражение по ID
+**GET** `/expressions/{id}`
 
-**Запрос:**
-- **Метод:** `GET`
-- **URL:** `/internal/task`
-
-**Пример запроса с `curl`:**
+**curl:**
 ```bash
-curl -X GET http://localhost:8080/internal/task
+curl -X GET http://localhost:8080/expressions/1 \
+  -H "Authorization: Bearer <JWT_TOKEN>"
 ```
 
-**Ответ:**
-- **Статус:** `200 OK`
-- **Тело ответа:** JSON с информацией о задаче.
-
-```json
-{
-  "task": {
-    "id": "1",
-    "arg1": 2,
-    "arg2": 2,
-    "operation": "*",
-    "operation_time": 1000
-  }
-}
-```
-
----
-
-### 5. Отправка результата вычисления задачи (внутренний эндпоинт)
-
-**Запрос:**
-- **Метод:** `POST`
-- **URL:** `/internal/task`
-- **Тело запроса:** JSON с полями `id` (идентификатор задачи) и `res` (результат вычисления).
-
-**Пример запроса с `curl`:**
-```bash
-curl -X POST http://localhost:8080/internal/task \
--H "Content-Type: application/json" \
--d '{"id": 1, "res": 4}'
-```
-
-**Ответ:**
-- **Статус:** `200 OK`
-- **Тело ответа:** JSON с подтверждением принятия результата.
-
-```json
-{
-  "status": "резльтат принят"
-}
+**Возможные ответы:**
+- `200 OK` — если выражение найдено и принадлежит пользователю
+- `403 Forbidden` — если чужое выражение
+- `404 Not Found` — если не существует
 ```
 
 ---
