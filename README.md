@@ -70,7 +70,7 @@ go run .\cmd\agent\main.go
 ## Аутентификация
 
 ###  Регистрация
-**POST** `/register`
+**POST** `api/v1/register`
 
 ```json
 {
@@ -81,7 +81,7 @@ go run .\cmd\agent\main.go
 
 **curl:**
 ```bash
-curl -X POST http://localhost:8080/register \
+curl -X POST http://localhost:8080/api/v1/register \
   -H "Content-Type: application/json" \
   -d '{"username":"testuser","password":"testpass"}'
 ```
@@ -89,11 +89,11 @@ curl -X POST http://localhost:8080/register \
 ---
 
 ### Логин
-**POST** `/login`
+**POST** `api/v1/login`
 
 **curl:**
 ```bash
-curl -X POST http://localhost:8080/login \
+curl -X POST http://localhost:8080/api/v1/login \
   -H "Content-Type: application/json" \
   -d '{"username":"testuser","password":"testpass"}'
 ```
@@ -114,27 +114,27 @@ curl -X POST http://localhost:8080/login \
 ---
 
 ### Отправить выражение
-**POST** `/expressions`
+**POST** `api/v1/expressions`
 
 ```json
 {
-  "expression": "2 + 3 * 4"
+  "expression": "2+3*4"
 }
 ```
 
 **curl:**
 ```bash
-curl -X POST http://localhost:8080/expressions \
+curl -X POST http://localhost:8080/api/v1/expressions \
   -H "Authorization: Bearer <JWT_TOKEN>" \
   -H "Content-Type: application/json" \
-  -d '{"expression": "2 + 3 * 4"}'
+  -d '{"expression": "2+3*4"}'
 ```
 
 **Ответ:**
 ```json
 {
   "id": 1,
-  "expression": "2 + 3 * 4",
+  "expression": "2+3*4",
   "result": 14
 }
 ```
@@ -142,22 +142,22 @@ curl -X POST http://localhost:8080/expressions \
 ---
 
 ### 📋 Получить все выражения
-**GET** `/expressions`
+**GET** `api/v1/expressions`
 
 **curl:**
 ```bash
-curl -X GET http://localhost:8080/expressions \
+curl -X GET http://localhost:8080/api/v1/expressions \
   -H "Authorization: Bearer <JWT_TOKEN>"
 ```
 
 ---
 
 ### Получить выражение по ID
-**GET** `/expressions/{id}`
+**GET** `api/v1/expressions/{id}`
 
 **curl:**
 ```bash
-curl -X GET http://localhost:8080/expressions/1 \
+curl -X GET http://localhost:8080/api/v1/expressions/1 \
   -H "Authorization: Bearer <JWT_TOKEN>"
 ```
 
