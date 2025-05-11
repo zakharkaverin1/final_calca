@@ -1,4 +1,4 @@
-module github.com/zakharkaverin1/final_calculator
+module github.com/zakharkaverin1/final_calca
 
 go 1.23.0
 
